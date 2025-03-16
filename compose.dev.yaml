@@ -1,17 +1,20 @@
 services:
   web:
-    image: nginx:${NGINX_VERSION} # Using the default Nginx image with custom configuration.
+    build:
+      context: ./docker/development/nginx
+      args:
+        NGINX_VERSION: ${NGINX_VERSION}
     volumes:
       # Mount the application code for live updates
       - ./:/var/www/html
       # Mount the Nginx configuration file
-      - ./docker/development/nginx/conf/laravel.conf:/etc/nginx/conf.d/laravel.conf:ro
+      - ./docker/development/nginx/conf/laravel.conf:/etc/nginx/conf.d/template/laravel.conf
       - ./logs:/var/log/nginx
     ports:
       # Map port 80 inside the container to the port specified by 'NGINX_PORT' on the host machine
       - "80:80"
     environment:
-      - NGINX_HOST=${SERVER_NAME}
+      - SERVER_NAME=${SERVER_NAME}
     networks:
       - laravel-development
     depends_on:
