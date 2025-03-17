@@ -6,7 +6,7 @@ services:
         NGINX_VERSION: ${NGINX_VERSION}
     volumes:
       # Mount the application code for live updates
-      - ./:/var/www/html
+      - ./src:/var/www/html:delegated
       # Mount the Nginx configuration file
       - ./docker/development/nginx/conf/laravel.conf:/etc/nginx/conf.d/template/laravel.conf
       - ./logs:/var/log/nginx
@@ -43,7 +43,7 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       # Mount the application code for live updates
-      - ./src:/var/www/html
+      - ./src:/var/www/html:delegated
     networks:
       - laravel-development
     depends_on:
@@ -70,7 +70,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./src:/var/www/html
+      - ./src:/var/www/html:delegated
     networks:
       - laravel-development
 
