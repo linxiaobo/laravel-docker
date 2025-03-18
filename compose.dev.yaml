@@ -46,6 +46,7 @@ services:
       - ./src:/var/www/html:delegated
     networks:
       - laravel-development
+      - mysql
     depends_on:
       mysql:
         condition: service_started  # Wait for database server to start
