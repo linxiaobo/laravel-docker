@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     bcmath \
     soap \
     && pecl install redis \
-    && docker-php-ext-enable redis \
+    && docker-php-ext-enable redis zip\
     && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
@@ -56,7 +56,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 
 # Stage 2: Production environment
-FROM php:8.3-fpm AS production
+ARG PHP_VERSION
+FROM php:${PHP_VERSION}-fpm AS production
 
 # Install only runtime libraries needed in production
 # libfcgi-bin and procps are required for the php-fpm-healthcheck script
