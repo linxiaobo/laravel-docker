@@ -70,6 +70,8 @@ services:
     stdin_open: true  # Keeps standard input open for 'docker exec'
     env_file:
       - .env
+    ports:
+      - "5173:5173"
     volumes:
       - ./src:/var/www/html:delegated
     networks:
